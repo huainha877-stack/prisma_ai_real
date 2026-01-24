@@ -123,7 +123,7 @@ export function AuthForm() {
       <div className="bg-card rounded-2xl p-8 shadow-soft-lg border border-border">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <div className="w-8 h-8 bg-primary rounded-lg" />
+            <img src="/logo.png" alt="Logo" className="w-8 h-8" />
           </div>
           <h1 className="text-2xl font-semibold text-foreground">
             {isLogin ? 'Welcome back' : 'Create account'}

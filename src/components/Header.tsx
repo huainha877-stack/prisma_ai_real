@@ -17,9 +17,7 @@ export function Header() {
           onClick={() => navigate('/')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center glow-sm">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
+          <img src="/logo.png" alt="Logo" className="w-9 h-9" />
           <span className="text-xl font-semibold text-gradient">Prisma AI</span>
         </button>
 
