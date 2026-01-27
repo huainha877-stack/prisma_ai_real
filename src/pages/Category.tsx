@@ -5,9 +5,13 @@ import { DocumentList } from '@/components/DocumentList';
 import { DocumentUpload } from '@/components/DocumentUpload';
 import { DocumentChat } from '@/components/DocumentChat';
 import { UtilitySubOptions } from '@/components/UtilitySubOptions';
+import { CategoryNotes } from '@/components/CategoryNotes';
+import { LanguageSelectorInline } from '@/components/LanguageSelectorInline';
+import { VoiceTyping } from '@/components/VoiceTyping';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/hooks/useLanguage';
 import { 
   ArrowLeft, 
   Plus, 
@@ -16,7 +20,8 @@ import {
   GraduationCap,
   Zap,
   FileText,
-  FolderOpen
+  FolderOpen,
+  Mic
 } from 'lucide-react';
 
 interface Document {
@@ -59,6 +64,7 @@ export default function Category() {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { language, isRTL } = useLanguage();
   
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,6 +72,7 @@ export default function Category() {
   const [showUtilityOptions, setShowUtilityOptions] = useState(false);
   const [selectedUtilityType, setSelectedUtilityType] = useState<string | null>(null);
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
+  const [showNotes, setShowNotes] = useState(false);
 
   const category = categoryId && categoryInfo[categoryId];
 
@@ -162,31 +169,62 @@ export default function Category() {
     );
   }
 
+  // Translations for Category page
+  const categoryTranslations = {
+    en: { upload: 'Upload', documents: 'documents', document: 'document', notes: 'Notes' },
+    ur: { upload: 'اپ لوڈ', documents: 'دستاویزات', document: 'دستاویز', notes: 'نوٹس' },
+    hi: { upload: 'अपलोड', documents: 'दस्तावेज़', document: 'दस्तावेज़', notes: 'नोट्स' },
+    ar: { upload: 'تحميل', documents: 'مستندات', document: 'مستند', notes: 'ملاحظات' },
+  };
+  const ct = categoryTranslations[language as keyof typeof categoryTranslations] || categoryTranslations.en;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`min-h-screen bg-background ${isRTL ? 'rtl' : ''}`}>
       <Header />
       
       <main className="container max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center gap-4 mb-8 animate-fade-in">
+        <div className="flex items-center gap-4 mb-6 animate-fade-in flex-wrap">
           <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${category.color}`}>
             {category.icon}
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <h1 className="text-2xl font-bold text-foreground">
               {category.title}
             </h1>
             <p className="text-sm text-muted-foreground">
-              {documents.length} {documents.length === 1 ? 'document' : 'documents'}
+              {documents.length} {documents.length === 1 ? ct.document : ct.documents}
             </p>
           </div>
+        </div>
+
+        {/* Action Bar with Language & Voice */}
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <LanguageSelectorInline />
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowNotes(!showNotes)}
+            className="gap-2"
+          >
+            <FileText className="w-4 h-4" />
+            {ct.notes}
+          </Button>
+          <div className="flex-1" />
           <Button onClick={handleUploadClick} className="gap-2">
             <Plus className="w-4 h-4" />
-            Upload Image
+            {ct.upload}
           </Button>
         </div>
+
+        {/* Notes Section */}
+        {showNotes && categoryId && (
+          <div className="mb-6 animate-fade-in">
+            <CategoryNotes categoryId={categoryId} />
+          </div>
+        )}
 
         {loading ? (
           <div className="flex items-center justify-center py-20">

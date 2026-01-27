@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { imageBase64, category, mimeType } = await req.json();
+    const { imageBase64, category, mimeType, language, responseLanguage } = await req.json();
     
     if (!imageBase64 || !category) {
       return new Response(
@@ -20,6 +20,15 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Determine response language
+    const langMap: Record<string, string> = {
+      'ur': 'Urdu',
+      'en': 'English',
+      'hi': 'Hindi',
+      'ar': 'Arabic'
+    };
+    const responseLang = langMap[responseLanguage] || 'English';
 
     // Use user-provided Gemini API key via OpenRouter
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
@@ -54,7 +63,17 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Processing document for user ${user.id}, category: ${category}`);
+    console.log(`Processing document for user ${user.id}, category: ${category}, language: ${language || 'auto'}`);
+
+    // Build medical disclaimer based on response language
+    const medicalDisclaimers: Record<string, string> = {
+      'English': 'Please consult with a doctor before taking these medicines.',
+      'Urdu': 'ان ادویات کے استعمال سے پہلے ڈاکٹر سے مشورہ ضرور کریں۔',
+      'Hindi': 'इन दवाइयों को लेने से पहले कृपया डॉक्टर से सलाह लें।',
+      'Arabic': 'يرجى استشارة الطبيب قبل تناول هذه الأدوية.'
+    };
+
+    const medicalDisclaimer = medicalDisclaimers[responseLang] || medicalDisclaimers['English'];
 
     // Call Gemini via OpenRouter API
     const systemPrompt = `You are Prisma AI, a professional document analysis assistant. Your task is to:
@@ -63,7 +82,12 @@ serve(async (req) => {
 2. Format the extracted text cleanly and organized
 3. Identify the document type and provide a brief summary
 4. Detect any important dates (appointments, due dates, expiry dates, deadlines)
-5. Never generate medical or legal advice
+5. For medical documents: List any medicines mentioned, followed by this disclaimer: "${medicalDisclaimer}"
+6. For Hajj/Umrah related documents: Identify travel dates, visa details, and important event dates
+7. Never generate medical or legal advice beyond what's in the document
+
+${language ? `The document is in ${language}. Extract text in the original language.` : 'Auto-detect the document language.'}
+Respond in ${responseLang}.
 
 Respond ONLY in this JSON format:
 {
@@ -76,7 +100,10 @@ Respond ONLY in this JSON format:
       "description": "What this date represents",
       "isImportant": true/false
     }
-  ]
+  ],
+  "medicines": ["List of medicines if any"],
+  "isHajjRelated": false,
+  "documentLanguage": "Detected language"
 }
 
 Category context: ${category}

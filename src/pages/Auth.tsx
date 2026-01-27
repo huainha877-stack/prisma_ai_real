@@ -2,11 +2,15 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthForm } from '@/components/AuthForm';
+import { Sparkles } from 'lucide-react';
+import { LanguageSelectorInline } from '@/components/LanguageSelectorInline';
+import { useLanguage } from '@/hooks/useLanguage';
 
 export default function Auth() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     // Redirect to dashboard if already logged in
@@ -37,16 +41,21 @@ export default function Auth() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className={`min-h-screen bg-background flex flex-col ${isRTL ? 'rtl' : ''}`}>
       {/* Header */}
-      <header className="p-6">
+      <header className="p-6 flex items-center justify-between">
         <button 
           onClick={() => navigate('/')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <img src="/logo.png" alt="Logo" className="w-9 h-9" />
+          <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center glow-sm">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
           <span className="text-xl font-semibold text-gradient">Prisma AI</span>
         </button>
+        
+        {/* Language Selector at top */}
+        <LanguageSelectorInline />
       </header>
 
       {/* Main */}

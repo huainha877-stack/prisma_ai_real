@@ -53,7 +53,7 @@
 
 @layer base {
   :root {
-    /* Light theme */
+    /* Light theme - Clean White */
     --primary: 270 70% 50%;
     --primary-foreground: 0 0% 100%;
     --primary-soft: 270 70% 95%;
@@ -61,20 +61,20 @@
     --primary-glow: 270 100% 65%;
 
     --background: 0 0% 100%;
-    --foreground: 270 20% 10%;
+    --foreground: 220 15% 15%;
     
     --card: 0 0% 100%;
-    --card-foreground: 270 20% 10%;
+    --card-foreground: 220 15% 15%;
     --card-hover: 270 15% 97%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 270 20% 10%;
+    --popover-foreground: 220 15% 15%;
 
     --secondary: 270 10% 95%;
-    --secondary-foreground: 270 20% 10%;
+    --secondary-foreground: 220 15% 15%;
 
     --muted: 270 10% 93%;
-    --muted-foreground: 270 10% 40%;
+    --muted-foreground: 220 10% 35%;
 
     --accent: 280 80% 60%;
     --accent-foreground: 0 0% 100%;
@@ -83,8 +83,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 15% 88%;
-    --input: 270 15% 90%;
+    --border: 220 15% 85%;
+    --input: 220 15% 90%;
     --ring: 270 70% 50%;
 
     --radius: 0.75rem;
@@ -93,27 +93,27 @@
     --category-education: 45 100% 50%;
     --category-utility: 200 90% 50%;
     --category-insurance: 270 80% 60%;
-    --category-others: 270 20% 50%;
+    --category-others: 220 20% 50%;
 
     --category-medical-bg: 340 75% 95%;
     --category-education-bg: 45 100% 92%;
     --category-utility-bg: 200 90% 92%;
     --category-insurance-bg: 270 80% 95%;
-    --category-others-bg: 270 20% 95%;
+    --category-others-bg: 220 20% 95%;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 270 20% 10%;
+    --sidebar-foreground: 220 15% 15%;
     --sidebar-primary: 270 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 270 15% 95%;
-    --sidebar-accent-foreground: 270 20% 10%;
-    --sidebar-border: 270 15% 88%;
+    --sidebar-accent-foreground: 220 15% 15%;
+    --sidebar-border: 220 15% 88%;
     --sidebar-ring: 270 70% 50%;
 
-    --shadow-sm: 0 1px 2px 0 rgb(139 92 246 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(139 92 246 / 0.1), 0 2px 4px -2px rgb(139 92 246 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(139 92 246 / 0.15), 0 4px 6px -4px rgb(139 92 246 / 0.15);
-    --shadow-xl: 0 20px 25px -5px rgb(139 92 246 / 0.2), 0 8px 10px -6px rgb(139 92 246 / 0.2);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
     --gradient-purple-black: linear-gradient(135deg, hsl(270 70% 50%) 0%, hsl(270 20% 6%) 100%);
     --gradient-glow: linear-gradient(180deg, hsl(270 70% 50% / 0.15) 0%, transparent 100%);
@@ -121,27 +121,27 @@
 
   .dark {
     /* Dark theme - Deep Purple (Premium & AI-Native) */
-    --primary: 270 70% 50%;
+    --primary: 270 70% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-soft: 270 70% 95%;
-    --primary-hover: 270 70% 40%;
+    --primary-soft: 270 70% 20%;
+    --primary-hover: 270 70% 50%;
     --primary-glow: 270 100% 65%;
 
     --background: 270 20% 6%;
-    --foreground: 0 0% 98%;
+    --foreground: 0 0% 95%;
     
     --card: 270 15% 10%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 0 0% 95%;
     --card-hover: 270 15% 14%;
     
     --popover: 270 15% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 95%;
 
     --secondary: 270 10% 15%;
     --secondary-foreground: 0 0% 95%;
 
     --muted: 270 10% 20%;
-    --muted-foreground: 270 10% 60%;
+    --muted-foreground: 270 10% 70%;
 
     --accent: 280 80% 60%;
     --accent-foreground: 0 0% 100%;
@@ -150,7 +150,7 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 15% 20%;
+    --border: 270 15% 25%;
     --input: 270 15% 18%;
     --ring: 270 70% 50%;
 
@@ -220,17 +220,21 @@
     border-color: hsl(270 70% 50% / 0.3);
   }
 
-  /* Category Card Styles */
+  /* Category Card Styles - Light Mode Compatible */
   .category-card {
-    @apply relative overflow-hidden rounded-2xl p-6 transition-all duration-300 cursor-pointer;
+    @apply relative overflow-hidden rounded-2xl p-6 transition-all duration-300 cursor-pointer bg-card;
     box-shadow: var(--shadow-md);
+    border: 1px solid hsl(var(--border));
+  }
+
+  .dark .category-card {
     background: linear-gradient(135deg, hsl(270 15% 12%) 0%, hsl(270 15% 8%) 100%);
     border: 1px solid hsl(270 15% 20%);
   }
 
   .category-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-xl), 0 0 40px -10px hsl(270 70% 50% / 0.4);
+    box-shadow: var(--shadow-xl);
     border-color: hsl(270 70% 50% / 0.5);
   }
 

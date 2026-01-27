@@ -4,7 +4,71 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/hooks/useLanguage';
 import { Mail, Lock, User, Loader2, Eye, EyeOff } from 'lucide-react';
+
+const translations = {
+  en: {
+    welcomeBack: 'Welcome back',
+    createAccount: 'Create account',
+    signInContinue: 'Sign in to continue to Prisma AI',
+    getStarted: 'Get started with Prisma AI',
+    fullName: 'Full Name',
+    email: 'Email',
+    password: 'Password',
+    signIn: 'Sign in',
+    signUp: 'Sign up',
+    or: 'or',
+    continueGoogle: 'Continue with Google',
+    noAccount: "Don't have an account?",
+    haveAccount: "Already have an account?",
+  },
+  ur: {
+    welcomeBack: 'خوش آمدید',
+    createAccount: 'اکاؤنٹ بنائیں',
+    signInContinue: 'پرزما AI میں سائن ان کریں',
+    getStarted: 'پرزما AI کے ساتھ شروع کریں',
+    fullName: 'پورا نام',
+    email: 'ای میل',
+    password: 'پاس ورڈ',
+    signIn: 'سائن ان',
+    signUp: 'سائن اپ',
+    or: 'یا',
+    continueGoogle: 'گوگل کے ساتھ جاری رکھیں',
+    noAccount: 'اکاؤنٹ نہیں ہے؟',
+    haveAccount: 'پہلے سے اکاؤنٹ ہے؟',
+  },
+  hi: {
+    welcomeBack: 'वापसी पर स्वागत है',
+    createAccount: 'खाता बनाएं',
+    signInContinue: 'प्रिज्मा AI में साइन इन करें',
+    getStarted: 'प्रिज्मा AI के साथ शुरू करें',
+    fullName: 'पूरा नाम',
+    email: 'ईमेल',
+    password: 'पासवर्ड',
+    signIn: 'साइन इन',
+    signUp: 'साइन अप',
+    or: 'या',
+    continueGoogle: 'Google के साथ जारी रखें',
+    noAccount: 'खाता नहीं है?',
+    haveAccount: 'पहले से खाता है?',
+  },
+  ar: {
+    welcomeBack: 'مرحباً بعودتك',
+    createAccount: 'إنشاء حساب',
+    signInContinue: 'تسجيل الدخول إلى بريزما AI',
+    getStarted: 'ابدأ مع بريزما AI',
+    fullName: 'الاسم الكامل',
+    email: 'البريد الإلكتروني',
+    password: 'كلمة المرور',
+    signIn: 'تسجيل الدخول',
+    signUp: 'إنشاء حساب',
+    or: 'أو',
+    continueGoogle: 'المتابعة مع Google',
+    noAccount: 'ليس لديك حساب؟',
+    haveAccount: 'لديك حساب بالفعل؟',
+  },
+};
 
 export function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,6 +79,9 @@ export function AuthForm() {
   const [loading, setLoading] = useState(false);
   const { signIn, signUp, signInWithGoogle } = useAuth();
   const { toast } = useToast();
+  const { language, isRTL } = useLanguage();
+
+  const t = translations[language as keyof typeof translations] || translations.en;
 
   const validateForm = () => {
     if (!email || !password) {
@@ -119,17 +186,17 @@ export function AuthForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto animate-fade-in">
+    <div className={`w-full max-w-md mx-auto animate-fade-in ${isRTL ? 'rtl' : ''}`}>
       <div className="bg-card rounded-2xl p-8 shadow-soft-lg border border-border">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8" />
+            <div className="w-8 h-8 bg-primary rounded-lg" />
           </div>
           <h1 className="text-2xl font-semibold text-foreground">
-            {isLogin ? 'Welcome back' : 'Create account'}
+            {isLogin ? t.welcomeBack : t.createAccount}
           </h1>
           <p className="text-muted-foreground mt-2">
-            {isLogin ? 'Sign in to continue to Prisma AI' : 'Get started with Prisma AI'}
+            {isLogin ? t.signInContinue : t.getStarted}
           </p>
         </div>
 
@@ -137,7 +204,7 @@ export function AuthForm() {
           {!isLogin && (
             <div className="space-y-2">
               <Label htmlFor="fullName" className="text-sm font-medium">
-                Full Name
+                {t.fullName}
               </Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -155,7 +222,7 @@ export function AuthForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm font-medium">
-              Email
+              {t.email}
             </Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -173,7 +240,7 @@ export function AuthForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password" className="text-sm font-medium">
-              Password
+              {t.password}
             </Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -205,7 +272,7 @@ export function AuthForm() {
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              isLogin ? 'Sign in' : 'Create account'
+              isLogin ? t.signIn : t.createAccount
             )}
           </Button>
         </form>
@@ -215,7 +282,7 @@ export function AuthForm() {
             <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-card px-2 text-muted-foreground">or</span>
+            <span className="bg-card px-2 text-muted-foreground">{t.or}</span>
           </div>
         </div>
 
@@ -244,17 +311,17 @@ export function AuthForm() {
               d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
             />
           </svg>
-          Continue with Google
+          {t.continueGoogle}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground mt-6">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+          {isLogin ? t.noAccount : t.haveAccount}{' '}
           <button
             type="button"
             onClick={() => setIsLogin(!isLogin)}
             className="text-primary font-medium hover:underline"
           >
-            {isLogin ? 'Sign up' : 'Sign in'}
+            {isLogin ? t.signUp : t.signIn}
           </button>
         </p>
       </div>

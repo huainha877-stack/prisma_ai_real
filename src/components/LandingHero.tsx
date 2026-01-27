@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Sparkles, ArrowRight, Target, Zap, Shield, FileText, Calendar, Stethoscope, GraduationCap, FolderOpen } from 'lucide-react';
+import { Sparkles, ArrowRight, Target, Zap, Shield, FileText, Calendar, Stethoscope, GraduationCap, FolderOpen, Mic, Camera, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { CategoryCard } from '@/components/CategoryCard';
 import { AnimatedRobot } from '@/components/AnimatedRobot';
 import { AnimatedBilling } from '@/components/AnimatedBilling';
+import { BenefitsSection } from '@/components/BenefitsSection';
 import {
   Dialog,
   DialogContent,
@@ -142,6 +143,9 @@ export function LandingHero() {
           </div>
         </div>
       </section>
+
+      {/* Benefits Section */}
+      <BenefitsSection />
 
       {/* Explore AI Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>

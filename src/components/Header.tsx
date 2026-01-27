@@ -4,11 +4,14 @@ import { LogOut, Calendar, User, Sparkles } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationBell } from '@/components/NotificationBell';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useLanguage } from '@/hooks/useLanguage';
 
 export function Header() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   return (
     <header className="glass border-b border-border sticky top-0 z-50">
@@ -17,11 +20,14 @@ export function Header() {
           onClick={() => navigate('/')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <img src="/logo.png" alt="Logo" className="w-9 h-9" />
-          <span className="text-xl font-semibold text-gradient">Prisma AI</span>
+          <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center glow-sm">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-semibold text-gradient">{t('app.name')}</span>
         </button>
 
         <div className="flex items-center gap-1">
+          <LanguageSelector />
           <ThemeToggle />
           
           {user ? (
@@ -60,7 +66,7 @@ export function Header() {
               onClick={() => navigate('/auth')}
               className="gap-2 bg-gradient-to-r from-primary to-accent hover:opacity-90"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Button>
           )}
         </div>

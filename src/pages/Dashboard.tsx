@@ -104,48 +104,41 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-        </div>
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main className="container max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Welcome back
-          </h1>
-          <p className="text-muted-foreground">
-            Select a category to view or upload documents
-          </p>
-        </div>
+    <div className="container max-w-6xl mx-auto px-4 py-8">
+      <div className="mb-8 animate-fade-in">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          Welcome back
+        </h1>
+        <p className="text-muted-foreground">
+          Select a category to view or upload documents
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categories.map((category, index) => (
-            <div 
-              key={category.id}
-              className="animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <CategoryCard
-                icon={category.icon}
-                title={category.title}
-                description={category.description}
-                documentCount={counts[category.id]}
-                category={category.id}
-                onClick={() => navigate(`/category/${category.id}`)}
-              />
-            </div>
-          ))}
-        </div>
-      </main>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {categories.map((category, index) => (
+          <div 
+            key={category.id}
+            className="animate-slide-up"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <CategoryCard
+              icon={category.icon}
+              title={category.title}
+              description={category.description}
+              documentCount={counts[category.id]}
+              category={category.id}
+              onClick={() => navigate(`/category/${category.id}`)}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

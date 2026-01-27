@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { documentId, message } = await req.json();
+    const { documentId, message, language } = await req.json();
     
     if (!documentId || !message) {
       return new Response(
@@ -20,6 +20,24 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    // Determine response language
+    const langMap: Record<string, string> = {
+      'ur': 'Urdu',
+      'en': 'English',
+      'hi': 'Hindi',
+      'ar': 'Arabic'
+    };
+    const responseLang = langMap[language] || 'English';
+
+    // Medical disclaimer in multiple languages
+    const medicalDisclaimers: Record<string, string> = {
+      'English': 'Please consult with a doctor before taking these medicines.',
+      'Urdu': 'ان ادویات کے استعمال سے پہلے ڈاکٹر سے مشورہ ضرور کریں۔',
+      'Hindi': 'इन दवाइयों को लेने से पहले कृपया डॉक्टर से सलाह लें।',
+      'Arabic': 'يرجى استشارة الطبيب قبل تناول هذه الأدوية.'
+    };
+    const medicalDisclaimer = medicalDisclaimers[responseLang] || medicalDisclaimers['English'];
 
     // Use user-provided Gemini API key via OpenRouter
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
@@ -68,6 +86,33 @@ serve(async (req) => {
       );
     }
 
+    // For medical reports, fetch previous medical documents for Health Journey Map
+    let healthJourneyContext = '';
+    if (document.category === 'medical') {
+      const { data: previousMedicalDocs } = await supabase
+        .from('documents')
+        .select('title, extracted_text, summary, created_at')
+        .eq('category', 'medical')
+        .eq('user_id', user.id)
+        .neq('id', documentId)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (previousMedicalDocs && previousMedicalDocs.length > 0) {
+        healthJourneyContext = `
+
+HEALTH JOURNEY MAP - Previous Medical Reports for comparison:
+${previousMedicalDocs.map((doc: any, i: number) => `
+Report ${i + 1} (${new Date(doc.created_at).toLocaleDateString()}):
+Title: ${doc.title}
+Summary: ${doc.summary || 'No summary'}
+Key content: ${doc.extracted_text.substring(0, 500)}...
+`).join('\n')}
+
+When the user asks about health progress, compare current values with previous reports and highlight improvements or concerns.`;
+      }
+    }
+
     // Fetch previous chat messages for context
     const { data: previousMessages } = await supabase
       .from('chat_messages')
@@ -86,9 +131,9 @@ serve(async (req) => {
         content: message
       });
 
-    console.log(`Chat request for document ${documentId}`);
+    console.log(`Chat request for document ${documentId}, language: ${responseLang}`);
 
-    const systemPrompt = `You are Prisma AI, a helpful document assistant. You answer questions ONLY based on the document content provided below.
+    const systemPrompt = `You are Prisma AI, a helpful document assistant. You answer questions ONLY based on the document content provided below. You MUST respond in ${responseLang}.
 
 DOCUMENT TITLE: ${document.title}
 DOCUMENT CATEGORY: ${document.category}
@@ -96,14 +141,18 @@ DOCUMENT CONTENT:
 ${document.extracted_text}
 
 ${document.summary ? `DOCUMENT SUMMARY: ${document.summary}` : ''}
+${healthJourneyContext}
 
 IMPORTANT RULES:
 1. Answer ONLY based on the document content above
-2. If the information is not in the document, say "This information is not found in the document"
+2. If the information is not in the document, say "This information is not found in the document" (in ${responseLang})
 3. Never make assumptions or add information not present in the document
 4. Be clear, concise, and helpful
-5. Never provide medical diagnoses, legal advice, or financial recommendations
-6. If asked about dates, reference only what's in the document`;
+5. Respond STRICTLY in ${responseLang} language
+6. If asked about dates, reference only what's in the document
+7. For medical reports with medicines, always add this disclaimer after listing medicines: "${medicalDisclaimer}"
+8. If comparing with previous reports (Health Journey Map), show progress with clear comparisons
+9. For Hajj/Umrah documents, help with event planning and date tracking`;
 
     // Build conversation history
     const conversationMessages = [

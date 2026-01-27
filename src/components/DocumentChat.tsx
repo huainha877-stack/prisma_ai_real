@@ -5,6 +5,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
+import { VoiceTyping } from '@/components/VoiceTyping';
+import { AIFooterDisclaimer } from '@/components/AIFooterDisclaimer';
+import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
+import { LanguageSelectorInline } from '@/components/LanguageSelectorInline';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface Document {
   id: string;
@@ -35,6 +40,7 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
+  const { language, isRTL } = useLanguage();
 
   useEffect(() => {
     loadMessages();
@@ -85,7 +91,8 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
       const { data, error } = await supabase.functions.invoke('chat-document', {
         body: {
           documentId: document.id,
-          message: userMessage
+          message: userMessage,
+          language: language // Pass selected language
         }
       });
 
@@ -140,10 +147,10 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
   );
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
+    <div className={`flex flex-col h-[calc(100vh-4rem)] ${isRTL ? 'rtl' : ''}`}>
       {/* Header */}
       <div className="glass border-b border-border p-4">
-        <div className="flex items-center gap-4 max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 max-w-4xl mx-auto flex-wrap">
           <Button variant="ghost" size="icon" onClick={onBack} className="hover:bg-primary/10">
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -155,6 +162,7 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
               {format(new Date(document.created_at), 'MMM d, yyyy')}
             </p>
           </div>
+          <LanguageSelectorInline />
           <Button
             variant="ghost"
             size="sm"
@@ -261,6 +269,10 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
       <div className="glass border-t border-border p-4">
         <form onSubmit={sendMessage} className="max-w-4xl mx-auto">
           <div className="relative flex items-end gap-2 bg-card border border-border rounded-2xl p-2 focus-within:border-primary/50 focus-within:glow-sm transition-all">
+            <VoiceTyping 
+              onTranscript={(text) => setInput(prev => prev + ' ' + text)}
+              disabled={loading}
+            />
             <Textarea
               ref={textareaRef}
               value={input}
@@ -280,9 +292,7 @@ export function DocumentChat({ document, onBack }: DocumentChatProps) {
               <Send className="w-4 h-4" />
             </Button>
           </div>
-          <p className="text-xs text-center text-muted-foreground mt-2">
-            Prisma AI answers based only on document content. No assumptions.
-          </p>
+          <AIFooterDisclaimer />
         </form>
       </div>
     </div>

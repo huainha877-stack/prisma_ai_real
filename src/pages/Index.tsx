@@ -15,21 +15,16 @@ const Index = () => {
     );
   }
 
-  // Show landing page for non-authenticated users
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <LandingHero />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  // Show dashboard for authenticated users
-  return <Dashboard />;
+  // Show landing page with hero for all users, but Dashboard content for logged-in users
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <main className="flex-1">
+        {user ? <Dashboard /> : <LandingHero />}
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default Index;
