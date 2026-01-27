@@ -47,7 +47,7 @@ const categories = [
   }
 ];
 
-export function LandingHero({ showCategorySection = true }: { showCategorySection?: boolean }) {
+export function LandingHero({ showCategorySection = true, showBenefits = true }: { showCategorySection?: boolean; showBenefits?: boolean }) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
@@ -145,8 +145,7 @@ export function LandingHero({ showCategorySection = true }: { showCategorySectio
       </section>
       )}
 
-      {/* Benefits Section */}
-      <BenefitsSection />
+      {showBenefits && <BenefitsSection />}
 
       {/* Explore AI Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>

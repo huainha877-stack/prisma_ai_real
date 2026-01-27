@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { CategoryCard } from '@/components/CategoryCard';
 import { LandingHero } from '@/components/LandingHero';
+import { BenefitsSection } from '@/components/BenefitsSection';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { 
@@ -113,7 +114,7 @@ export default function Dashboard() {
 
   return (
     <div className="w-full">
-      <LandingHero showCategorySection={false} />
+      <LandingHero showCategorySection={false} showBenefits={false} />
       
       <div className="container max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8 animate-fade-in">
@@ -144,6 +145,8 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      <BenefitsSection />
     </div>
   );
 }
