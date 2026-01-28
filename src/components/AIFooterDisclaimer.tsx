@@ -2,7 +2,7 @@ import { AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const disclaimers = {
-  en: "Gemini can make mistakes, so double-check it.",
+  en: "Ai can make mistakes, so double-check it.",
   ur: "جیمنی غلطیاں کر سکتا ہے، اس لیے دوبارہ چیک کریں۔",
   hi: "जेमिनी गलतियाँ कर सकता है, इसलिए दोबारा जांच लें।",
   ar: "قد يخطئ جيميني، لذا تحقق مرة أخرى."

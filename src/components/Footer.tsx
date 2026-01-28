@@ -10,7 +10,7 @@ const footerTexts = {
     privacy: "Privacy",
     terms: "Terms",
     support: "Support",
-    aiDisclaimer: "Gemini can make mistakes, so double-check it."
+    aiDisclaimer: "Ai can make mistakes, so double-check it."
   },
   ur: {
     designedBy: "ڈیزائن اور تیار کردہ",
