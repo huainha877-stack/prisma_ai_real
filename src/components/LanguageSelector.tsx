@@ -16,20 +16,22 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="hover:bg-primary/10">
-          <Globe className="w-5 h-5" />
+        <Button variant="ghost" size="sm" className="gap-2 hover:bg-primary/10 px-3">
+          <span className="text-lg">{currentLang?.flag}</span>
+          <Globe className="w-4 h-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-40">
+      <DropdownMenuContent align="end" className="w-44">
         {languageOptions.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => setLanguage(lang.code)}
-            className={`cursor-pointer ${language === lang.code ? 'bg-primary/10 text-primary' : ''}`}
+            onClick={() => setLanguage(lang.code as any)}
+            className={`cursor-pointer gap-3 ${language === lang.code ? 'bg-primary/10 text-primary' : ''}`}
           >
+            <span className="text-lg">{lang.flag}</span>
             <span className="flex-1">{lang.name}</span>
             {language === lang.code && (
-              <span className="text-xs text-muted-foreground">✓</span>
+              <span className="text-xs text-primary">✓</span>
             )}
           </DropdownMenuItem>
         ))}

@@ -312,8 +312,8 @@ export function useLanguage() {
 }
 
 export const languageOptions = [
-  { code: 'en' as Language, name: 'English', nativeName: 'English' },
-  { code: 'ur' as Language, name: 'اردو', nativeName: 'Urdu' },
-  { code: 'hi' as Language, name: 'हिन्दी', nativeName: 'Hindi' },
-  { code: 'ar' as Language, name: 'العربية', nativeName: 'Arabic' },
+  { code: 'en' as Language, name: 'English', nativeName: 'English', flag: '🇺🇸' },
+  { code: 'ur' as Language, name: 'اردو', nativeName: 'Urdu', flag: '🇵🇰' },
+  { code: 'hi' as Language, name: 'हिन्दी', nativeName: 'Hindi', flag: '🇮🇳' },
+  { code: 'ar' as Language, name: 'العربية', nativeName: 'Arabic', flag: '🇸🇦' },
 ];

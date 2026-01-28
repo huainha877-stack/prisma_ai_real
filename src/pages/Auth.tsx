@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthForm } from '@/components/AuthForm';
+import { Sparkles } from 'lucide-react';
 import { LanguageSelectorInline } from '@/components/LanguageSelectorInline';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -47,7 +48,9 @@ export default function Auth() {
           onClick={() => navigate('/')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <img src="/logo.png" alt="PrismaAI" className="w-9 h-9" />
+          <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center glow-sm">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
           <span className="text-xl font-semibold text-gradient">Prisma AI</span>
         </button>
         

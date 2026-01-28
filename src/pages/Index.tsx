@@ -1,8 +1,9 @@
 import { useAuth } from '@/hooks/useAuth';
-import Dashboard from './Dashboard';
-import { LandingHero } from '@/components/LandingHero';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { HeroSection } from '@/components/HeroSection';
+import { BenefitsSection } from '@/components/BenefitsSection';
+import { DashboardCategories } from '@/components/DashboardCategories';
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -15,14 +16,20 @@ const Index = () => {
     );
   }
 
-  // Show landing page with hero for all users, but Dashboard content for logged-in users
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main className="flex-1">
-        {user ? <Dashboard /> : <LandingHero />}
+        {/* Hero section always visible */}
+        <HeroSection />
+        
+        {/* Categories section - different behavior for logged in users */}
+        <DashboardCategories isLoggedIn={!!user} />
+        
+        {/* Benefits section always visible */}
+        <BenefitsSection />
       </main>
-      <Footer />
+      <Footer showDisclaimer={false} />
     </div>
   );
 };

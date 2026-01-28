@@ -1,4 +1,4 @@
-import { Home, AlertCircle } from 'lucide-react';
+import { Sparkles, Home, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -9,7 +9,7 @@ const footerTexts = {
     privacy: "Privacy",
     terms: "Terms",
     support: "Support",
-    aiDisclaimer: "Ai can make mistakes, so double-check it."
+    aiDisclaimer: "Gemini can make mistakes, so double-check it."
   },
   ur: {
     designedBy: "ڈیزائن اور تیار کردہ",
@@ -21,7 +21,7 @@ const footerTexts = {
   },
   hi: {
     designedBy: "द्वारा डिज़ाइन और विकसित",
-    home: "होم",
+    home: "होम",
     privacy: "गोपनीयता",
     terms: "शर्तें",
     support: "सहायता",
@@ -37,7 +37,11 @@ const footerTexts = {
   }
 };
 
-export function Footer() {
+interface FooterProps {
+  showDisclaimer?: boolean;
+}
+
+export function Footer({ showDisclaimer = true }: FooterProps) {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const isRTL = language === 'ur' || language === 'ar';
@@ -46,22 +50,20 @@ export function Footer() {
   return (
     <footer className={`border-t border-border bg-card/50 backdrop-blur-sm ${isRTL ? 'rtl' : ''}`}>
       <div className="container max-w-6xl mx-auto px-4 py-6">
-        {/* Logo and Brand */}
-        <div className="flex items-center justify-center gap-3 mb-4 pb-4 border-b border-border">
-          <img src="/logo.png" alt="PrismaAI" className="w-8 h-8" />
-          <span className="text-lg font-semibold text-gradient">PrismaAI</span>
-        </div>
-
-        {/* AI Disclaimer */}
-        <div className="flex items-center justify-center gap-2 mb-4 pb-4 border-b border-border">
-          <AlertCircle className="w-4 h-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">{texts.aiDisclaimer}</span>
-        </div>
+        {/* AI Disclaimer - only show if showDisclaimer is true */}
+        {showDisclaimer && (
+          <div className="flex items-center justify-center gap-2 mb-4 pb-4 border-b border-border">
+            <AlertCircle className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">{texts.aiDisclaimer}</span>
+          </div>
+        )}
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="PrismaAI" className="w-8 h-8" />
+            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-white" />
+            </div>
             <span className="text-lg font-semibold text-gradient">Prisma AI</span>
           </div>
 

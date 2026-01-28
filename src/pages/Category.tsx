@@ -32,31 +32,38 @@ interface Document {
   created_at: string;
 }
 
+import { PartyPopper } from 'lucide-react';
+
 const categoryInfo: Record<string, { title: string; icon: JSX.Element; color: string }> = {
   medical: {
     title: 'Medical Reports',
     icon: <Stethoscope className="w-5 h-5" />,
-    color: 'text-red-600 bg-red-100'
+    color: 'text-red-600 bg-red-100 dark:bg-red-900/30'
   },
   education: {
     title: 'Education / School Notes',
     icon: <GraduationCap className="w-5 h-5" />,
-    color: 'text-amber-600 bg-amber-100'
+    color: 'text-amber-600 bg-amber-100 dark:bg-amber-900/30'
   },
   utility: {
     title: 'Utility Bills',
     icon: <Zap className="w-5 h-5" />,
-    color: 'text-blue-600 bg-blue-100'
+    color: 'text-blue-600 bg-blue-100 dark:bg-blue-900/30'
   },
   insurance: {
     title: 'Insurance & Legal Papers',
     icon: <FileText className="w-5 h-5" />,
-    color: 'text-purple-600 bg-purple-100'
+    color: 'text-purple-600 bg-purple-100 dark:bg-purple-900/30'
   },
   others: {
     title: 'Others',
     icon: <FolderOpen className="w-5 h-5" />,
-    color: 'text-gray-600 bg-gray-100'
+    color: 'text-gray-600 bg-gray-100 dark:bg-gray-800/30'
+  },
+  events: {
+    title: 'Events Folder',
+    icon: <PartyPopper className="w-5 h-5" />,
+    color: 'text-pink-600 bg-pink-100 dark:bg-pink-900/30'
   }
 };
 

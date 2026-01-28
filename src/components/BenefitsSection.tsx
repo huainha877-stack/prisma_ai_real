@@ -6,137 +6,140 @@ import {
   Mic, 
   Camera,
   Shield,
-  Edit3
+  Edit3,
+  PartyPopper,
+  Map,
+  Languages
 } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const benefits = {
   en: [
     {
-      icon: Activity,
-      title: "Comprehensive Health Tracking",
-      description: "Seamlessly transform your medical reports into a visual Health Journey Map to track your recovery and progress."
+      icon: PartyPopper,
+      title: "Smart Event Archiving",
+      description: "Never lose an invitation again. Store wedding cards and event details in a dedicated folder with automatic calendar syncing."
+    },
+    {
+      icon: Map,
+      title: "Dynamic Health Mapping",
+      description: "See your health progress over time with our 'Journey Map' that compares your old and new medical reports."
+    },
+    {
+      icon: Shield,
+      title: "Medical Safety First",
+      description: "Get instant summaries of prescriptions and lab results, always backed by professional medical disclaimers."
+    },
+    {
+      icon: Languages,
+      title: "Global Communication",
+      description: "Effortlessly switch between multiple languages with our flag-integrated language selector."
     },
     {
       icon: Calendar,
-      title: "Smart Hajj Planner",
-      description: "Organize your pilgrimage with automated event marking, calendar reminders, and flexible scheduling."
+      title: "Precision Scheduling",
+      description: "Full control over your calendar. Edit or fix any reminder or appointment with a single tap."
     },
     {
-      icon: Zap,
-      title: "Instant Medical Insights",
-      description: "Get immediate breakdowns of your lab results and suggested medications with professional safety disclaimers."
-    },
-    {
-      icon: Globe,
-      title: "Multilingual Accessibility",
-      description: "Communicate in your preferred language—our AI understands and responds in major global languages including Urdu, English, Hindi, and Arabic."
-    },
-    {
-      icon: Mic,
-      title: "Hands-Free Interaction",
-      description: "Use Voice Typing and Camera Scan features for a faster, more efficient experience without manual typing."
-    },
-    {
-      icon: Edit3,
-      title: "Secure & Flexible Management",
-      description: "Easily edit or delete your appointments and reminders to ensure your schedule is always accurate."
+      icon: Camera,
+      title: "Integrated Multi-Media",
+      description: "Use high-speed Camera scanning and Voice-to-Text for a seamless, typing-free experience."
     }
   ],
   ur: [
     {
-      icon: Activity,
-      title: "جامع صحت کی نگرانی",
-      description: "اپنی طبی رپورٹس کو صحت کے سفر کے نقشے میں تبدیل کریں اور اپنی صحت یابی کو ٹریک کریں۔"
+      icon: PartyPopper,
+      title: "سمارٹ ایونٹ آرکائیونگ",
+      description: "دعوت نامے کبھی نہ کھوئیں۔ شادی کے کارڈز اور ایونٹ کی تفصیلات کو خودکار کیلنڈر سنکنگ کے ساتھ محفوظ کریں۔"
+    },
+    {
+      icon: Map,
+      title: "متحرک صحت میپنگ",
+      description: "ہماری 'جرنی میپ' کے ساتھ وقت کے ساتھ اپنی صحت کی پیشرفت دیکھیں جو آپ کی پرانی اور نئی طبی رپورٹس کا موازنہ کرتی ہے۔"
+    },
+    {
+      icon: Shield,
+      title: "طبی حفاظت پہلے",
+      description: "نسخوں اور لیب نتائج کا فوری خلاصہ حاصل کریں، ہمیشہ پیشہ ورانہ طبی انتباہات کے ساتھ۔"
+    },
+    {
+      icon: Languages,
+      title: "عالمی مواصلات",
+      description: "ہمارے جھنڈے والے زبان کے انتخاب کے ساتھ آسانی سے متعدد زبانوں میں سوئچ کریں۔"
     },
     {
       icon: Calendar,
-      title: "سمارٹ حج پلانر",
-      description: "اپنے حج کو خودکار ایونٹ مارکنگ، کیلنڈر یاددہانیوں اور لچکدار شیڈولنگ کے ساتھ منظم کریں۔"
+      title: "درست شیڈولنگ",
+      description: "اپنے کیلنڈر پر مکمل کنٹرول۔ کسی بھی یاددہانی یا ملاقات کو ایک ٹیپ سے ترمیم کریں۔"
     },
     {
-      icon: Zap,
-      title: "فوری طبی بصیرت",
-      description: "اپنی لیب رپورٹس کی فوری تفصیل اور تجویز کردہ ادویات حفاظتی انتباہات کے ساتھ حاصل کریں۔"
-    },
-    {
-      icon: Globe,
-      title: "کثیر لسانی رسائی",
-      description: "اپنی پسندیدہ زبان میں بات چیت کریں - ہماری AI اردو، انگریزی، ہندی اور عربی میں جواب دیتی ہے۔"
-    },
-    {
-      icon: Mic,
-      title: "ہینڈز فری تعامل",
-      description: "وائس ٹائپنگ اور کیمرہ سکین فیچرز کا استعمال کریں بغیر ٹائپنگ کے تیز تجربے کے لیے۔"
-    },
-    {
-      icon: Edit3,
-      title: "محفوظ اور لچکدار انتظام",
-      description: "اپنی ملاقاتوں اور یاددہانیوں کو آسانی سے ترمیم یا حذف کریں۔"
+      icon: Camera,
+      title: "مربوط ملٹی میڈیا",
+      description: "تیز رفتار کیمرہ سکیننگ اور وائس ٹو ٹیکسٹ کا استعمال کریں بغیر ٹائپنگ کے تجربے کے لیے۔"
     }
   ],
   hi: [
     {
-      icon: Activity,
-      title: "व्यापक स्वास्थ्य ट्रैकिंग",
-      description: "अपनी मेडिकल रिपोर्ट्स को विजुअल हेल्थ जर्नी मैप में बदलें और अपनी रिकवरी ट्रैक करें।"
+      icon: PartyPopper,
+      title: "स्मार्ट इवेंट आर्काइविंग",
+      description: "फिर कभी निमंत्रण न खोएं। शादी के कार्ड और इवेंट विवरण को ऑटोमैटिक कैलेंडर सिंकिंग के साथ सुरक्षित करें।"
+    },
+    {
+      icon: Map,
+      title: "डायनामिक हेल्थ मैपिंग",
+      description: "हमारे 'जर्नी मैप' के साथ समय के साथ अपनी स्वास्थ्य प्रगति देखें जो आपकी पुरानी और नई मेडिकल रिपोर्ट की तुलना करता है।"
+    },
+    {
+      icon: Shield,
+      title: "मेडिकल सेफ्टी फर्स्ट",
+      description: "प्रिस्क्रिप्शन और लैब परिणामों का तुरंत सारांश प्राप्त करें, हमेशा पेशेवर मेडिकल डिस्क्लेमर के साथ।"
+    },
+    {
+      icon: Languages,
+      title: "ग्लोबल कम्युनिकेशन",
+      description: "हमारे फ्लैग-इंटीग्रेटेड लैंग्वेज सेलेक्टर के साथ आसानी से कई भाषाओं में स्विच करें।"
     },
     {
       icon: Calendar,
-      title: "स्मार्ट हज प्लानर",
-      description: "ऑटोमेटेड इवेंट मार्किंग, कैलेंडर रिमाइंडर्स और फ्लेक्सिबल शेड्यूलिंग के साथ अपनी तीर्थयात्रा प्लान करें।"
+      title: "प्रिसिजन शेड्यूलिंग",
+      description: "अपने कैलेंडर पर पूर्ण नियंत्रण। किसी भी रिमाइंडर या अपॉइंटमेंट को एक टैप से एडिट करें।"
     },
     {
-      icon: Zap,
-      title: "तत्काल चिकित्सा अंतर्दृष्टि",
-      description: "अपनी लैब रिपोर्ट्स का तुरंत विश्लेषण और सुझाई गई दवाइयां सुरक्षा चेतावनियों के साथ प्राप्त करें।"
-    },
-    {
-      icon: Globe,
-      title: "बहुभाषी पहुंच",
-      description: "अपनी पसंदीदा भाषा में संवाद करें - हमारी AI उर्दू, अंग्रेजी, हिंदी और अरबी में जवाब देती है।"
-    },
-    {
-      icon: Mic,
-      title: "हैंड्स-फ्री इंटरैक्शन",
-      description: "टाइपिंग के बिना तेज अनुभव के लिए वॉयस टाइपिंग और कैमरा स्कैन फीचर्स का उपयोग करें।"
-    },
-    {
-      icon: Edit3,
-      title: "सुरक्षित और लचीला प्रबंधन",
-      description: "अपनी अपॉइंटमेंट्स और रिमाइंडर्स को आसानी से एडिट या डिलीट करें।"
+      icon: Camera,
+      title: "इंटीग्रेटेड मल्टी-मीडिया",
+      description: "हाई-स्पीड कैमरा स्कैनिंग और वॉयस-टू-टेक्स्ट का उपयोग करें बिना टाइपिंग के अनुभव के लिए।"
     }
   ],
   ar: [
     {
-      icon: Activity,
-      title: "تتبع صحي شامل",
-      description: "حول تقاريرك الطبية إلى خريطة رحلة صحية مرئية لتتبع تعافيك وتقدمك."
+      icon: PartyPopper,
+      title: "أرشفة الأحداث الذكية",
+      description: "لا تفقد دعوة مرة أخرى. خزن بطاقات الزفاف وتفاصيل الأحداث في مجلد مخصص مع مزامنة التقويم التلقائية."
+    },
+    {
+      icon: Map,
+      title: "رسم خرائط الصحة الديناميكي",
+      description: "شاهد تقدمك الصحي بمرور الوقت مع 'خريطة الرحلة' التي تقارن تقاريرك الطبية القديمة والجديدة."
+    },
+    {
+      icon: Shield,
+      title: "السلامة الطبية أولاً",
+      description: "احصل على ملخصات فورية للوصفات الطبية ونتائج المختبر، مدعومة دائمًا بإخلاء المسؤولية الطبية المهنية."
+    },
+    {
+      icon: Languages,
+      title: "التواصل العالمي",
+      description: "انتقل بسهولة بين لغات متعددة باستخدام محدد اللغة المتكامل مع الأعلام."
     },
     {
       icon: Calendar,
-      title: "مخطط الحج الذكي",
-      description: "نظم حجك مع وضع علامات الأحداث التلقائية وتذكيرات التقويم والجدولة المرنة."
+      title: "جدولة دقيقة",
+      description: "تحكم كامل في تقويمك. عدل أي تذكير أو موعد بنقرة واحدة."
     },
     {
-      icon: Zap,
-      title: "رؤى طبية فورية",
-      description: "احصل على تحليل فوري لنتائج المختبر والأدوية المقترحة مع إخلاء المسؤولية المهنية."
-    },
-    {
-      icon: Globe,
-      title: "إمكانية الوصول متعددة اللغات",
-      description: "تواصل بلغتك المفضلة - الذكاء الاصطناعي يفهم ويستجيب بالأردية والإنجليزية والهندية والعربية."
-    },
-    {
-      icon: Mic,
-      title: "تفاعل بدون استخدام اليدين",
-      description: "استخدم ميزات الكتابة الصوتية ومسح الكاميرا لتجربة أسرع بدون كتابة يدوية."
-    },
-    {
-      icon: Edit3,
-      title: "إدارة آمنة ومرنة",
-      description: "عدل أو احذف مواعيدك وتذكيراتك بسهولة لضمان دقة جدولك دائمًا."
+      icon: Camera,
+      title: "وسائط متعددة متكاملة",
+      description: "استخدم المسح الضوئي عالي السرعة بالكاميرا وتحويل الصوت إلى نص لتجربة سلسة بدون كتابة."
     }
   ]
 };
@@ -146,21 +149,29 @@ export function BenefitsSection() {
   const currentBenefits = benefits[language as keyof typeof benefits] || benefits.en;
   const isRTL = language === 'ur' || language === 'ar';
 
+  const sectionTitle = {
+    en: 'Your Benefits',
+    ur: 'آپ کے فوائد',
+    hi: 'आपके लाभ',
+    ar: 'فوائدك'
+  };
+
+  const sectionDesc = {
+    en: 'Discover how Prisma AI simplifies your health, events, and document management',
+    ur: 'دریافت کریں کہ پرزما AI آپ کی صحت، ایونٹس اور دستاویزات کے انتظام کو کیسے آسان بناتا ہے',
+    hi: 'जानें कि प्रिज्मा AI आपकी स्वास्थ्य, इवेंट्स और दस्तावेज़ प्रबंधन को कैसे सरल बनाता है',
+    ar: 'اكتشف كيف يبسط بريزما AI صحتك وأحداثك وإدارة مستنداتك'
+  };
+
   return (
     <section className={`py-16 ${isRTL ? 'rtl' : ''}`}>
       <div className="container max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            {language === 'ur' ? 'آپ کے فوائد' : 
-             language === 'hi' ? 'आपके लाभ' : 
-             language === 'ar' ? 'فوائدك' : 
-             'Your Benefits'}
+            {sectionTitle[language as keyof typeof sectionTitle] || sectionTitle.en}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {language === 'ur' ? 'دریافت کریں کہ پرزما AI آپ کی صحت اور سفری منصوبہ بندی کو کیسے آسان بناتا ہے' :
-             language === 'hi' ? 'जानें कि प्रिज्मा AI आपकी स्वास्थ्य और यात्रा योजना को कैसे सरल बनाता है' :
-             language === 'ar' ? 'اكتشف كيف يبسط بريزما AI صحتك وتخطيط سفرك' :
-             'Discover how Prisma AI simplifies your health and travel planning'}
+            {sectionDesc[language as keyof typeof sectionDesc] || sectionDesc.en}
           </p>
         </div>
 

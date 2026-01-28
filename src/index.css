@@ -53,7 +53,7 @@
 
 @layer base {
   :root {
-    /* Light theme - Clean White */
+    /* Light theme - Clean White with High Contrast */
     --primary: 270 70% 50%;
     --primary-foreground: 0 0% 100%;
     --primary-soft: 270 70% 95%;
@@ -61,59 +61,61 @@
     --primary-glow: 270 100% 65%;
 
     --background: 0 0% 100%;
-    --foreground: 220 15% 15%;
+    --foreground: 220 20% 10%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 220 20% 10%;
     --card-hover: 270 15% 97%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 220 20% 10%;
 
-    --secondary: 270 10% 95%;
-    --secondary-foreground: 220 15% 15%;
+    --secondary: 270 10% 96%;
+    --secondary-foreground: 220 20% 10%;
 
-    --muted: 270 10% 93%;
-    --muted-foreground: 220 10% 35%;
+    --muted: 270 10% 94%;
+    --muted-foreground: 220 15% 40%;
 
-    --accent: 280 80% 60%;
+    --accent: 280 80% 55%;
     --accent-foreground: 0 0% 100%;
     --accent-soft: 280 80% 95%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 90%;
+    --border: 220 15% 80%;
+    --input: 220 15% 92%;
     --ring: 270 70% 50%;
 
     --radius: 0.75rem;
 
-    --category-medical: 340 75% 55%;
-    --category-education: 45 100% 50%;
-    --category-utility: 200 90% 50%;
-    --category-insurance: 270 80% 60%;
-    --category-others: 220 20% 50%;
+    --category-medical: 340 75% 50%;
+    --category-education: 45 100% 45%;
+    --category-utility: 200 90% 45%;
+    --category-insurance: 270 80% 55%;
+    --category-others: 220 20% 45%;
+    --category-events: 330 80% 55%;
 
     --category-medical-bg: 340 75% 95%;
     --category-education-bg: 45 100% 92%;
     --category-utility-bg: 200 90% 92%;
     --category-insurance-bg: 270 80% 95%;
     --category-others-bg: 220 20% 95%;
+    --category-events-bg: 330 80% 95%;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 15% 15%;
+    --sidebar-foreground: 220 20% 10%;
     --sidebar-primary: 270 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 270 15% 95%;
-    --sidebar-accent-foreground: 220 15% 15%;
-    --sidebar-border: 220 15% 88%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 220 15% 85%;
     --sidebar-ring: 270 70% 50%;
 
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.08);
 
     --gradient-purple-black: linear-gradient(135deg, hsl(270 70% 50%) 0%, hsl(270 20% 6%) 100%);
     --gradient-glow: linear-gradient(180deg, hsl(270 70% 50% / 0.15) 0%, transparent 100%);
@@ -256,27 +258,32 @@
 
   .category-medical {
     @apply border-l-4;
-    border-left-color: hsl(340 75% 55%);
+    border-left-color: hsl(340 75% 50%);
   }
 
   .category-education {
     @apply border-l-4;
-    border-left-color: hsl(45 100% 50%);
+    border-left-color: hsl(45 100% 45%);
   }
 
   .category-utility {
     @apply border-l-4;
-    border-left-color: hsl(200 90% 50%);
+    border-left-color: hsl(200 90% 45%);
   }
 
   .category-insurance {
     @apply border-l-4;
-    border-left-color: hsl(270 80% 60%);
+    border-left-color: hsl(270 80% 55%);
   }
 
   .category-others {
     @apply border-l-4;
     border-left-color: hsl(270 20% 50%);
+  }
+
+  .category-events {
+    @apply border-l-4;
+    border-left-color: hsl(330 80% 55%);
   }
 
   /* Gradient Text */

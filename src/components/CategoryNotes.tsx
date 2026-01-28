@@ -32,6 +32,8 @@ const translations = {
     reminderTime: 'Time',
     createReminder: 'Create Reminder',
     reminderCreated: 'Reminder created successfully',
+    loadError: 'Failed to load notes',
+    saveError: 'Failed to save notes',
   },
   ur: {
     notes: 'نوٹس',
@@ -45,6 +47,8 @@ const translations = {
     reminderTime: 'وقت',
     createReminder: 'یاد دہانی بنائیں',
     reminderCreated: 'یاد دہانی کامیابی سے بن گئی',
+    loadError: 'نوٹس لوڈ کرنے میں ناکام',
+    saveError: 'نوٹس محفوظ کرنے میں ناکام',
   },
   hi: {
     notes: 'नोट्स',
@@ -58,6 +62,8 @@ const translations = {
     reminderTime: 'समय',
     createReminder: 'रिमाइंडर बनाएं',
     reminderCreated: 'रिमाइंडर सफलतापूर्वक बना',
+    loadError: 'नोट्स लोड करने में विफल',
+    saveError: 'नोट्स सहेजने में विफल',
   },
   ar: {
     notes: 'ملاحظات',
@@ -71,12 +77,15 @@ const translations = {
     reminderTime: 'الوقت',
     createReminder: 'إنشاء تذكير',
     reminderCreated: 'تم إنشاء التذكير بنجاح',
+    loadError: 'فشل في تحميل الملاحظات',
+    saveError: 'فشل في حفظ الملاحظات',
   },
 };
 
 export function CategoryNotes({ categoryId }: CategoryNotesProps) {
   const [notes, setNotes] = useState('');
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showReminderDialog, setShowReminderDialog] = useState(false);
   const [reminderTitle, setReminderTitle] = useState('');
   const [reminderDate, setReminderDate] = useState('');
@@ -87,23 +96,80 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
-  // Load notes from localStorage (simple persistence)
+  // Load notes from database
   useEffect(() => {
-    const savedNotes = localStorage.getItem(`prisma-notes-${categoryId}`);
-    if (savedNotes) {
-      setNotes(savedNotes);
-    }
+    loadNotes();
   }, [categoryId]);
+
+  const loadNotes = async () => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('category_notes')
+        .select('content')
+        .eq('user_id', user.id)
+        .eq('category', categoryId)
+        .maybeSingle();
+
+      if (error) throw error;
+      
+      if (data) {
+        setNotes(data.content);
+      } else {
+        // Fallback to localStorage for existing notes
+        const savedNotes = localStorage.getItem(`prisma-notes-${categoryId}`);
+        if (savedNotes) {
+          setNotes(savedNotes);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load notes:', err);
+      // Fallback to localStorage
+      const savedNotes = localStorage.getItem(`prisma-notes-${categoryId}`);
+      if (savedNotes) {
+        setNotes(savedNotes);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { error } = await supabase
+        .from('category_notes')
+        .upsert({
+          user_id: user.id,
+          category: categoryId,
+          content: notes,
+        }, {
+          onConflict: 'user_id,category'
+        });
+
+      if (error) throw error;
+
+      // Also save to localStorage as backup
       localStorage.setItem(`prisma-notes-${categoryId}`, notes);
+
       toast({
         title: t.saved,
       });
     } catch (err) {
       console.error('Failed to save notes:', err);
+      toast({
+        title: t.saveError,
+        variant: 'destructive',
+      });
     } finally {
       setSaving(false);
     }
@@ -149,7 +215,7 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
 
   return (
     <div className={`bg-card border border-border rounded-xl p-4 ${isRTL ? 'rtl' : ''}`}>
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
             <StickyNote className="w-4 h-4 text-primary" />
@@ -164,7 +230,7 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
                 <span className="hidden sm:inline">{t.addReminder}</span>
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>{t.addReminder}</DialogTitle>
               </DialogHeader>
@@ -176,9 +242,10 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
                     value={reminderTitle}
                     onChange={(e) => setReminderTitle(e.target.value)}
                     placeholder={t.reminderTitle}
+                    className="mt-1"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="reminder-date">{t.reminderDate}</Label>
                     <Input
@@ -186,6 +253,7 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
                       type="date"
                       value={reminderDate}
                       onChange={(e) => setReminderDate(e.target.value)}
+                      className="mt-1"
                     />
                   </div>
                   <div>
@@ -195,6 +263,7 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
                       type="time"
                       value={reminderTime}
                       onChange={(e) => setReminderTime(e.target.value)}
+                      className="mt-1"
                     />
                   </div>
                 </div>
@@ -221,31 +290,39 @@ export function CategoryNotes({ categoryId }: CategoryNotesProps) {
         </div>
       </div>
 
-      <Textarea
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        placeholder={t.notesPlaceholder}
-        className="min-h-[120px] resize-none mb-3"
-      />
+      {loading ? (
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
+      ) : (
+        <>
+          <Textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder={t.notesPlaceholder}
+            className="min-h-[120px] resize-none mb-3"
+          />
 
-      <Button
-        onClick={handleSave}
-        disabled={saving}
-        size="sm"
-        className="w-full gap-2"
-      >
-        {saving ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            {t.saving}
-          </>
-        ) : (
-          <>
-            <Save className="w-4 h-4" />
-            {t.save}
-          </>
-        )}
-      </Button>
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            size="sm"
+            className="w-full gap-2"
+          >
+            {saving ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                {t.saving}
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                {t.save}
+              </>
+            )}
+          </Button>
+        </>
+      )}
     </div>
   );
 }

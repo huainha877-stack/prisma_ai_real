@@ -14,17 +14,23 @@ interface LanguageSelectorInlineProps {
 
 export function LanguageSelectorInline({ className = '' }: LanguageSelectorInlineProps) {
   const { language, setLanguage } = useLanguage();
+  const currentLang = languageOptions.find(l => l.code === language);
 
   return (
     <Select value={language} onValueChange={(value) => setLanguage(value as any)}>
-      <SelectTrigger className={`w-[130px] h-9 ${className}`}>
-        <Globe className="w-4 h-4 mr-2" />
-        <SelectValue placeholder="Language" />
+      <SelectTrigger className={`w-[150px] h-9 ${className}`}>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{currentLang?.flag}</span>
+          <SelectValue placeholder="Language" />
+        </div>
       </SelectTrigger>
       <SelectContent>
         {languageOptions.map((lang) => (
           <SelectItem key={lang.code} value={lang.code}>
-            {lang.name}
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{lang.flag}</span>
+              <span>{lang.name}</span>
+            </div>
           </SelectItem>
         ))}
       </SelectContent>

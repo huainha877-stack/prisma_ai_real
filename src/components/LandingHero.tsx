@@ -47,13 +47,13 @@ const categories = [
   }
 ];
 
-export function LandingHero({ showCategorySection = true, showBenefits = true }: { showCategorySection?: boolean; showBenefits?: boolean }) {
+export function LandingHero() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className={showCategorySection ? "min-h-screen bg-background" : "bg-background"}>
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Gradient Background */}
@@ -111,7 +111,7 @@ export function LandingHero({ showCategorySection = true, showBenefits = true }:
         </div>
       </section>
 
-      {showCategorySection && (
+      {/* Category Cards Section */}
       <section className="py-12 relative">
         <div className="container max-w-6xl mx-auto px-4">
           <div className="mb-8 text-center">
@@ -143,9 +143,9 @@ export function LandingHero({ showCategorySection = true, showBenefits = true }:
           </div>
         </div>
       </section>
-      )}
 
-      {showBenefits && <BenefitsSection />}
+      {/* Benefits Section */}
+      <BenefitsSection />
 
       {/* Explore AI Modal */}
       <Dialog open={showModal} onOpenChange={setShowModal}>
