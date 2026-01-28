@@ -8,6 +8,7 @@ import { UtilitySubOptions } from '@/components/UtilitySubOptions';
 import { CategoryNotes } from '@/components/CategoryNotes';
 import { LanguageSelectorInline } from '@/components/LanguageSelectorInline';
 import { VoiceTyping } from '@/components/VoiceTyping';
+import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -231,6 +232,11 @@ export default function Category() {
           <div className="mb-6 animate-fade-in">
             <CategoryNotes categoryId={categoryId} />
           </div>
+        )}
+
+        {/* Medical Disclaimer - only show for medical category */}
+        {categoryId === 'medical' && (
+          <MedicalDisclaimer className="mb-6 animate-fade-in" />
         )}
 
         {loading ? (
