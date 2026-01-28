@@ -2,7 +2,7 @@ import { AlertTriangle } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const disclaimers = {
-  en: "Please consult with a doctor before taking these medicines.",
+  en: "Please consult with a doctor before taking Result.",
   ur: "ان ادویات کے استعمال سے پہلے ڈاکٹر سے مشورہ ضرور کریں۔",
   hi: "इन दवाइयों को लेने से पहले कृपया डॉक्टर से सलाह लें।",
   ar: "يرجى استشارة الطبيب قبل تناول هذه الأدوية."

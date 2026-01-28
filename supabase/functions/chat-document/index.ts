@@ -32,7 +32,7 @@ serve(async (req) => {
 
     // Medical disclaimer in multiple languages
     const medicalDisclaimers: Record<string, string> = {
-      'English': 'Please consult with a doctor before taking these medicines.',
+      'English': 'Please consult with a doctor before taking Result.',
       'Urdu': 'ان ادویات کے استعمال سے پہلے ڈاکٹر سے مشورہ ضرور کریں۔',
       'Hindi': 'इन दवाइयों को लेने से पहले कृपया डॉक्टर से सलाह लें।',
       'Arabic': 'يرجى استشارة الطبيب قبل تناول هذه الأدوية.'
