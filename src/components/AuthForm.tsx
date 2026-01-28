@@ -158,8 +158,13 @@ export function AuthForm() {
         } else {
           toast({
             title: "Account created",
-            description: "Welcome to Prisma AI!",
+            description: "Welcome to Prisma AI! Please sign in.",
           });
+          // Switch to login mode after successful signup
+          setIsLogin(true);
+          setEmail('');
+          setPassword('');
+          setFullName('');
         }
       }
     } catch (err) {
