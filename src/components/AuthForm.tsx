@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/hooks/useLanguage';
 import { Mail, Lock, User, Loader2, Eye, EyeOff } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const translations = {
   en: {
@@ -189,9 +190,7 @@ export function AuthForm() {
     <div className={`w-full max-w-md mx-auto animate-fade-in ${isRTL ? 'rtl' : ''}`}>
       <div className="bg-card rounded-2xl p-8 shadow-soft-lg border border-border">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <div className="w-8 h-8 bg-primary rounded-lg" />
-          </div>
+          <img src={logo} alt="Prisma AI" className="w-16 h-16 object-contain mx-auto mb-4" />
           <h1 className="text-2xl font-semibold text-foreground">
             {isLogin ? t.welcomeBack : t.createAccount}
           </h1>

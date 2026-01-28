@@ -61,7 +61,7 @@ export function CategoryCard({ icon, title, description, documentCount, category
   return (
     <button
       onClick={onClick}
-      className={`category-card w-full text-left group ${styles.card}`}
+      className={`category-card w-full h-full text-left group ${styles.card} flex flex-col min-h-[200px]`}
     >
       <div className="flex items-start justify-between mb-4">
         <div className={`w-12 h-12 ${styles.iconBg} rounded-xl flex items-center justify-center ${styles.iconColor}`}>
@@ -74,14 +74,14 @@ export function CategoryCard({ icon, title, description, documentCount, category
         </div>
       </div>
       
-      <h3 className="text-lg font-semibold text-foreground mb-1">
+      <h3 className="text-lg font-semibold text-foreground mb-1 line-clamp-1">
         {title}
       </h3>
-      <p className="text-sm text-muted-foreground mb-4">
+      <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-1">
         {description}
       </p>
       
-      <div className="flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform">
+      <div className="flex items-center text-sm font-medium text-primary group-hover:translate-x-1 transition-transform mt-auto">
         View records
         <ChevronRight className="w-4 h-4 ml-1" />
       </div>

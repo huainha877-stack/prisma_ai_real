@@ -11,6 +11,8 @@ import Auth from "./pages/Auth";
 import Category from "./pages/Category";
 import Reminders from "./pages/Reminders";
 import Profile from "./pages/Profile";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ const App = () => (
                 <Route path="/category/:categoryId" element={<Category />} />
                 <Route path="/reminders" element={<Reminders />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

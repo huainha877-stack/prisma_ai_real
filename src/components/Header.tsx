@@ -1,11 +1,12 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { LogOut, Calendar, User, Sparkles } from 'lucide-react';
+import { LogOut, Calendar, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NotificationBell } from '@/components/NotificationBell';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { useLanguage } from '@/hooks/useLanguage';
+import logo from '@/assets/logo.png';
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -20,9 +21,7 @@ export function Header() {
           onClick={() => navigate('/')}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center glow-sm">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
+          <img src={logo} alt="Prisma AI" className="w-9 h-9 object-contain" />
           <span className="text-xl font-semibold text-gradient">{t('app.name')}</span>
         </button>
 

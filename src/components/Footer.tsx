@@ -1,6 +1,7 @@
-import { Sparkles, Home, AlertCircle } from 'lucide-react';
+import { Home, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
+import logo from '@/assets/logo.png';
 
 const footerTexts = {
   en: {
@@ -61,9 +62,7 @@ export function Footer({ showDisclaimer = true }: FooterProps) {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
+            <img src={logo} alt="Prisma AI" className="w-8 h-8 object-contain" />
             <span className="text-lg font-semibold text-gradient">Prisma AI</span>
           </div>
 
@@ -74,7 +73,7 @@ export function Footer({ showDisclaimer = true }: FooterProps) {
           </p>
 
           {/* Links */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-6 flex-wrap justify-center">
             <button
               onClick={() => navigate('/')}
               className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -82,20 +81,20 @@ export function Footer({ showDisclaimer = true }: FooterProps) {
               <Home className="w-4 h-4" />
               {texts.home}
             </button>
-            <a
-              href="#"
+            <button
+              onClick={() => navigate('/privacy')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {texts.privacy}
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              onClick={() => navigate('/terms')}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {texts.terms}
-            </a>
+            </button>
             <a
-              href="#"
+              href="mailto:support@prisma-ai.com"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {texts.support}
